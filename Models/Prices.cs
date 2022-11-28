@@ -1,11 +1,16 @@
-﻿namespace FlightSearchAssingment.Models
+﻿using Newtonsoft.Json;
+
+namespace FlightSearchAssingment.Models
 {
 	public class Prices
 	{
-		public int PricesId { get; set; }
+		public string PricesId { get; set; }
+		public string IteneraryID { get; set; }
+		[JsonProperty("currency")]
 		public string Currency { get; set; }
+		[JsonProperty("adult")]
 		public int AdultPrice { get; set; }
+		[JsonProperty("child")]
 		public int ChildPrice { get; set; }
-		public List<Itenerary> Iteneraties { get; set; }
 	}
 }

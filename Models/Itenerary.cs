@@ -1,12 +1,19 @@
-﻿namespace FlightSearchAssingment.Models
+﻿using Newtonsoft.Json;
+
+namespace FlightSearchAssingment.Models
 {
 	public class Itenerary
 	{
-		public int IteneraryID { get; set; }
-		public DateTime DepartureTime { get; set; }
-		public DateTime ArrivalTime { get; set; }
-		public int AvailableSeats { get; set; }
+		public string IteneraryID { get; set; }
 		public Flight flight { get; set; }
-		public Prices PriceList { get; set; }
+
+		[JsonProperty("depatureAt")]
+		public DateTime DepartureTime { get; set; }
+		[JsonProperty("arriveAt")]
+		public DateTime ArrivalTime { get; set; }
+		[JsonProperty("avaliableSeats")]
+		public int AvailableSeats { get; set; }
+		[JsonProperty("prices")]
+		public Prices[] PriceList { get; set; }
 	}
 }
