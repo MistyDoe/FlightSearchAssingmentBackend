@@ -1,6 +1,6 @@
 ﻿namespace FlightSearchAssingment.Models
 {
-	public class Itenerary : Prices
+	public class Itenerary
 	{
 		public int IteneraryID { get; set; }
 		public DateTime DepartureTime { get; set; }
