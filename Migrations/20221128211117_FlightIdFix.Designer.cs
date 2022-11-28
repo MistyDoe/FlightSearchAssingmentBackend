@@ -3,6 +3,7 @@ using System;
 using FlightSearchAssingment.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlightSearchAssingment.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221128211117_FlightIdFix")]
+    partial class FlightIdFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
@@ -88,11 +91,13 @@ namespace FlightSearchAssingment.Migrations
 
             modelBuilder.Entity("FlightSearchAssingment.Models.Itenerary", b =>
                 {
-                    b.HasOne("FlightSearchAssingment.Models.Flight", null)
+                    b.HasOne("FlightSearchAssingment.Models.Flight", "flight")
                         .WithMany("Iteneraries")
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("flight");
                 });
 
             modelBuilder.Entity("FlightSearchAssingment.Models.Prices", b =>
