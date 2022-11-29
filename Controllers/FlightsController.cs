@@ -42,8 +42,7 @@ namespace FlightSearchAssingment.Controllers
 			foreach ( Flight flight in res.ToList() )
 			{
 				Flight flightretrun = await _context.Flights
-					.Where(
-					x =>
+					.Where(x =>
 					x.Departure.Contains(flightSearchDTO.ArrivalDestination)
 					&& x.Arrival.Contains(flightSearchDTO.DepartureDestination))
 							.Include(f => f.Iteneraries
@@ -56,10 +55,14 @@ namespace FlightSearchAssingment.Controllers
 			}
 			return Ok(res.Concat(returnres));
 		}
-
-		private bool FlightExists (string id)
+		[HttpPatch]
+		public async Task<ActionResult<IEnumerable<Itenerary>>> UpdateSeatsLeft (string iteneraryId, int TotalPassangers)
 		{
-			return _context.Flights.Any(e => e.FlightId == id);
+			Itenerary iteneraryToUpdate = await _context.Iteneraries.FirstOrDefaultAsync(x => x.IteneraryID == iteneraryId);
+			iteneraryToUpdate.AvailableSeats -= TotalPassangers;
+			_context.Update(iteneraryToUpdate);
+			_context.SaveChanges();
+			return Ok(iteneraryToUpdate);
 		}
 	}
 }
