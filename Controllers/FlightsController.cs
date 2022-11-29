@@ -2,6 +2,7 @@
 using FlightSearchAssingment.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data.Entity.Core.Objects;
 
 namespace FlightSearchAssingment.Controllers
 {
@@ -20,16 +21,26 @@ namespace FlightSearchAssingment.Controllers
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<Flight>>> Search (FlightSearchDTO flightSearchDTO)
 		{
-			var res = await _context.Flights.Where(x =>
+			var res = await _context.Flights.
+			Where(x =>
 			x.Departure.Contains(flightSearchDTO.DepartureDestination) &&
 			x.Arrival.Contains(flightSearchDTO.ArrivalDestination))
 			.Include(
-				flight => flight.Iteneraries.Where(i => EntityFunctions.TruncateTime(i.DepartureTime) == EntityFunctions.TruncateTime(flightSearchDTO.DepartureDate));) &&
-													i.ArrivalTime.Equals(flightSearchDTO.ArrivalDate)
-													))
+				flight => flight.Iteneraries.
+				Where(i =>
+				EntityFunctions.TruncateTime(i.DepartureTime) == EntityFunctions.TruncateTime(flightSearchDTO.DepartureDate) &&
+				EntityFunctions.TruncateTime(i.ArrivalTime) == EntityFunctions.TruncateTime(flightSearchDTO.ArrivalDate)))
 			.ToListAsync();
+			if ( flightSearchDTO.RoundTrip == false )
+			{
+				return Ok(res);
+			}
 
-			return Ok(res);
+			foreach ( Flight flight in res )
+			{
+
+
+			}
 		}
 
 		private bool FlightExists (string id)
