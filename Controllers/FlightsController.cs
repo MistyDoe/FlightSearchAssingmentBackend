@@ -2,7 +2,6 @@
 using FlightSearchAssingment.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Entity.Core.Objects;
 
 namespace FlightSearchAssingment.Controllers
 {
@@ -19,7 +18,7 @@ namespace FlightSearchAssingment.Controllers
 
 		// GET: api/Flights
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Flight>>> Search (FlightSearchDTO flightSearchDTO)
+		public async Task<ActionResult<IEnumerable<Flight>>> Search ([FromQuery] FlightSearchDTO flightSearchDTO)
 		{
 			var res = await _context.Flights.
 			Where(x =>
@@ -28,19 +27,30 @@ namespace FlightSearchAssingment.Controllers
 			.Include(
 				flight => flight.Iteneraries.
 				Where(i =>
-				EntityFunctions.TruncateTime(i.DepartureTime) == EntityFunctions.TruncateTime(flightSearchDTO.DepartureDate) &&
-				EntityFunctions.TruncateTime(i.ArrivalTime) == EntityFunctions.TruncateTime(flightSearchDTO.ArrivalDate)))
+				(i.DepartureTime.Date == flightSearchDTO.DepartureDate.Date) &&
+				(i.ArrivalTime.Date == flightSearchDTO.ArrivalDate.Date)))
 			.ToListAsync();
 			if ( flightSearchDTO.RoundTrip == false )
 			{
 				return Ok(res);
 			}
+			var returnres = new List<Flight>();
 
 			foreach ( Flight flight in res )
 			{
-
-
+				Flight flightretrun = await _context.Flights
+					.Where(
+			x =>
+			x.Departure.Contains(flightSearchDTO.ArrivalDestination) &&
+			x.Arrival.Contains(flightSearchDTO.DepartureDestination))
+				.Include(f => f.Iteneraries)
+					.ThenInclude(x =>
+				(x.DepartureTime.Date == flightSearchDTO.RetrunDepartureDate.Date) &&
+				(x.ArrivalTime.Date) == (flightSearchDTO.RetrunArrivalDate)).
+				FirstOrDefaultAsync();
+				res.Add(flightretrun);
 			}
+			return Ok(res);
 		}
 
 		private bool FlightExists (string id)

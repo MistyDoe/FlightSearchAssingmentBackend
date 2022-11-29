@@ -5,7 +5,7 @@ namespace FlightSearchAssingment.Models
 	public class Itenerary
 	{
 		public string IteneraryID { get; set; }
-		public string FlightId { get; set; }
+		public Flight Flight { get; set; }
 
 		[JsonProperty("depatureAt")]
 		public DateTime DepartureTime { get; set; }

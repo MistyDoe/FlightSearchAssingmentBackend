@@ -6,12 +6,9 @@ namespace FlightSearchAssingment.Data
 	public class DataContext : DbContext
 	{
 
-		//public DataContext (DbContextOptions<DataContext> options) : base(options)
-		//{
-		//}
-
-		protected override void OnConfiguring (DbContextOptionsBuilder options)
-	 => options.UseSqlite("Data Source = Flight.db");
+		public DataContext (DbContextOptions<DataContext> options) : base(options)
+		{
+		}
 
 		public DbSet<Flight> Flights { get; set; }
 		public DbSet<Itenerary> Iteneraries { get; set; }
