@@ -36,21 +36,21 @@ namespace FlightSearchAssingment.Controllers
 			}
 			var returnres = new List<Flight>();
 
-			foreach ( Flight flight in res )
+			foreach ( Flight flight in res.ToList() )
 			{
 				Flight flightretrun = await _context.Flights
 					.Where(
 			x =>
 			x.Departure.Contains(flightSearchDTO.ArrivalDestination) &&
 			x.Arrival.Contains(flightSearchDTO.DepartureDestination))
-				.Include(f => f.Iteneraries)
-					.ThenInclude(x =>
+				.Include(f => f.Iteneraries
+					.Where(x =>
 				(x.DepartureTime.Date == flightSearchDTO.RetrunDepartureDate.Date) &&
-				(x.ArrivalTime.Date) == (flightSearchDTO.RetrunArrivalDate)).
+				(x.ArrivalTime.Date) == (flightSearchDTO.RetrunArrivalDate))).
 				FirstOrDefaultAsync();
-				res.Add(flightretrun);
+				returnres.Add(flightretrun);
 			}
-			return Ok(res);
+			return Ok(res.Concat(returnres));
 		}
 
 		private bool FlightExists (string id)
