@@ -1,4 +1,5 @@
 ﻿using FlightSearchAssingment.Data;
+using FlightSearchAssingment.DTOs;
 using FlightSearchAssingment.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
