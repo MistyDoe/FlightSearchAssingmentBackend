@@ -5,7 +5,7 @@ namespace FlightSearchAssingment.Models
 	public class Prices
 	{
 		public string PricesId { get; set; }
-		public string IteneraryID { get; set; }
+		public Itenerary Itenerary { get; set; }
 		[JsonProperty("currency")]
 		public string Currency { get; set; }
 		[JsonProperty("adult")]
