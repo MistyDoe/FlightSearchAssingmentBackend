@@ -23,16 +23,14 @@ namespace FlightSearchAssingment.Controllers
 		{
 			var res = await _context.Flights.
 			Where(x =>
-			x.Departure.Contains(flightSearchDTO.DepartureDestination) &&
-			x.Arrival.Contains(flightSearchDTO.ArrivalDestination))
+			x.Departure.Contains(flightSearchDTO.DepartureDestination
 			.Include(
 				flight => flight.Iteneraries.
 				Where(i =>
 				(i.DepartureTime.Date.ToString().Contains(flightSearchDTO.DepartureDate.Date.ToString())) &&
-				(i.ArrivalTime.Date.ToString().Contains(flightSearchDTO.ArrivalDate.Date.ToString())) &&
 				(i.AvailableSeats >= flightSearchDTO.Adults + flightSearchDTO.Children)))
 			.ThenInclude(
-				itenerary => itenerary.PriceList)
+				itenerary => itenerary.PriceList)))
 			.ToListAsync();
 			if ( flightSearchDTO.RoundTrip == false )
 			{

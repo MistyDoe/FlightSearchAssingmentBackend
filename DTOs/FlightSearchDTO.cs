@@ -8,8 +8,7 @@
         public int Adults { get; set; }
         public int Children { get; set; }
         public DateTime DepartureDate { get; set; }
-        public DateTime ArrivalDate { get; set; }
         public DateTime RetrunDepartureDate { get; set; }
-        public DateTime RetrunArrivalDate { get; set; }
+
     }
 }
