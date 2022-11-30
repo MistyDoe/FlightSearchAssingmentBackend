@@ -1,14 +1,18 @@
-﻿namespace FlightSearchAssingment.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FlightSearchAssingment.DTOs
 {
     public class FlightSearchDTO
     {
-        public string DepartureDestination { get; set; }
-        public string ArrivalDestination { get; set; }
-        public bool RoundTrip { get; set; }
-        public int Adults { get; set; }
-        public int Children { get; set; }
-        public DateTime DepartureDate { get; set; }
-        public DateTime RetrunDepartureDate { get; set; }
+        public string departureDestination { get; set; }
+        public string arrivalDestination { get; set; }
+        public bool roundTrip { get; set; }
+        public int adults { get; set; }
+        public int children { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime departureDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime retrunDepartureDate { get; set; }
 
     }
 }

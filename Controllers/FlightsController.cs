@@ -23,17 +23,17 @@ namespace FlightSearchAssingment.Controllers
 		{
 			var res = await _context.Flights.
 			Where(x =>
-			x.Departure.Contains(flightSearchDTO.DepartureDestination))
+			x.Departure.Contains(flightSearchDTO.departureDestination))
 			.Include(
 				flight => flight.Iteneraries.
 				Where(i =>
-				(i.DepartureTime.Date.ToString().Contains(flightSearchDTO.DepartureDate.Date.ToString()))
+				(i.DepartureTime.Date.ToString().Contains(flightSearchDTO.departureDate.Date.ToString()))
 				 &&
-				(i.AvailableSeats >= flightSearchDTO.Adults + flightSearchDTO.Children)))
+				(i.AvailableSeats >= flightSearchDTO.adults + flightSearchDTO.children)))
 			.ThenInclude(
 				itenerary => itenerary.PriceList)
 			.ToListAsync();
-			if ( flightSearchDTO.RoundTrip == false )
+			if ( flightSearchDTO.roundTrip == false )
 			{
 				return Ok(res);
 			}
@@ -43,11 +43,11 @@ namespace FlightSearchAssingment.Controllers
 			{
 				Flight flightretrun = await _context.Flights
 					.Where(x =>
-					x.Departure.Contains(flightSearchDTO.ArrivalDestination)
-					&& x.Arrival.Contains(flightSearchDTO.DepartureDestination))
+					x.Departure.Contains(flightSearchDTO.arrivalDestination)
+					&& x.Arrival.Contains(flightSearchDTO.departureDestination))
 							.Include(f => f.Iteneraries
 								.Where(x =>
-								x.DepartureTime.Date.ToString().Contains(flightSearchDTO.RetrunDepartureDate.Date.ToString())
+								x.DepartureTime.Date.ToString().Contains(flightSearchDTO.retrunDepartureDate.Date.ToString())
 									))
 									.FirstOrDefaultAsync();
 				returnres.Add(flightretrun);

@@ -13,12 +13,16 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers().AddJsonOptions(x =>
 				x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
+
 builder.Services.AddDbContext<DataContext>(options =>
 options.UseSqlite($"Data Source = Flight.db"));
 
 
 var app = builder.Build();
 
+app.UseCors(x => x.AllowAnyHeader()
+	  .AllowAnyMethod()
+	  .AllowAnyOrigin());
 // Configure the HTTP request pipeline.
 if ( app.Environment.IsDevelopment() )
 {
