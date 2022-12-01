@@ -19,7 +19,7 @@ namespace FlightSearchAssingment.Controllers
 
 		// GET: api/Flights
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Flight>>> Search ([FromQuery] FlightSearchDTO flightSearchDTO)
+		public async Task<ActionResult<IEnumerable<Flight>>> Search ([FromHeader] FlightSearchDTO flightSearchDTO)
 		{
 			var res = await _context.Flights.
 			Where(x =>
