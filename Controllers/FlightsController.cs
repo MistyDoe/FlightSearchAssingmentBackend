@@ -19,7 +19,7 @@ namespace FlightSearchAssingment.Controllers
 
 		// GET: api/Flights
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Flight>>> Search ([FromHeader] FlightSearchDTO flightSearchDTO)
+		public async Task<ActionResult<IEnumerable<Flight>>> Search ([FromQuery] FlightSearchDTO flightSearchDTO)
 		{
 			var res = await _context.Flights.
 			Where(x =>
@@ -33,8 +33,15 @@ namespace FlightSearchAssingment.Controllers
 			.ThenInclude(
 				itenerary => itenerary.PriceList)
 			.ToListAsync();
+			foreach ( Flight flight in res )
+			{
+				flight.RoundTrip = flightSearchDTO.roundTrip;
+				flight.Adults = flightSearchDTO.adults;
+				flight.Children = flightSearchDTO.children;
+			}
 			if ( flightSearchDTO.roundTrip == false )
 			{
+
 				return Ok(res);
 			}
 			var returnres = new List<Flight>();
@@ -50,6 +57,9 @@ namespace FlightSearchAssingment.Controllers
 								x.DepartureTime.Date.ToString().Contains(flightSearchDTO.retrunDepartureDate.Date.ToString())
 									))
 									.FirstOrDefaultAsync();
+				{
+					res.Remove(flight);
+				}
 				returnres.Add(flightretrun);
 			}
 			return Ok(res.Concat(returnres));

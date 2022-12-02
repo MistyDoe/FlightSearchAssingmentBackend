@@ -13,6 +13,9 @@ namespace FlightSearchAssingment.Models
 		public string Arrival { get; set; }
 		[JsonProperty("itineraries")]
 		public List<Itenerary> Iteneraries { get; set; }
+		public bool? RoundTrip { get; set; }
+		public int? Adults { get; set; }
+		public int? Children { get; set; }
 
 	}
 }

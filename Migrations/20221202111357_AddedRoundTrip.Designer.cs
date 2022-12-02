@@ -3,6 +3,7 @@ using System;
 using FlightSearchAssingment.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlightSearchAssingment.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221202111357_AddedRoundTrip")]
+    partial class AddedRoundTrip
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
@@ -22,15 +25,9 @@ namespace FlightSearchAssingment.Migrations
                     b.Property<string>("FlightId")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Adults")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Arrival")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<int?>("Children")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Departure")
                         .IsRequired()
