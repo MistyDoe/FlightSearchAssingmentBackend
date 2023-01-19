@@ -12,7 +12,7 @@ The endpoints are restricted to
 ## Build with
 
 * Asp.Net Core
-* Entiry
+* Entity
 * Sqlite
 
 ## Installing
